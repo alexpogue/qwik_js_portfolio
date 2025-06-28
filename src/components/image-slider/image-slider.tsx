@@ -1,54 +1,76 @@
-import { component$, useSignal, $, JSX, PropFunction } from '@builder.io/qwik';
+import { component$, useSignal, useStylesScoped$, $ } from '@builder.io/qwik';
+import sliderDotStyle from "./slider_dots.css?inline";
 
 interface ImageSliderProps {
-  slides: JSX.Element[];
-  initialSlide: number;
+  slides: (() => JSX.Element)[];
+  initialSlide?: number;
   width?: string;
   height?: string;
 }
 
-export const ImageSlider = component$(({ slides, initialSlide }: ImageSliderProps) => {
+export const ImageSlider = component$(({ slides, initialSlide = 0, width = '100%', height = '350px' }: ImageSliderProps) => {
+  useStylesScoped$(sliderDotStyle);
   const index = useSignal(initialSlide);
 
+  const totalSlides = slides.length;
+
   const goToSlide = $((event: SubmitEvent, newIndex: number) => {
-    event.preventDefault(); // Prevent default form submission
-    index.value = newIndex; // Update state
+    event.preventDefault();
+    index.value = (newIndex + totalSlides) % totalSlides; // safe wrap around
   });
 
   return (
-    <div class="relative w-full max-w-3xl h-[300px] overflow-hidden rounded-2xl shadow-md flex items-center justify-center">
-      <div style={{border: '1px solid #AAA', padding:'10px', width:'95%', height:'350px'}} class="w-full h-full">
+    <div
+      style={{ width, height }}
+    >
+      <div
+        style={{border: '1px solid #AAA', padding:'10px', width:'95%', height:'350px'}}
+      >
         {slides[index.value]()}
       </div>
-      <form method="get" style={{ display: 'inline-block', marginRight: '5px' }} preventdefault:submit onSubmit$={(e) => goToSlide(e, (index.value - 1 + slides.length) % slides.length)}>
-        <input type="hidden" name="slide" value={(index.value - 1 + slides.length) % slides.length} />
+
+      {/* Previous Slide Button */}
+      <form
+        method="get"
+        preventdefault:submit
+        onSubmit$={e => goToSlide(e, index.value - 1)}
+        style={{ display: 'inline-block' }}
+      >
+        <input type="hidden" name="slide" value={(index.value - 1 + totalSlides) % totalSlides} />
         <button
           type="submit"
-          class="absolute top-1/2 left-2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow"
+          aria-label="Previous Slide"
         >
           ◀
         </button>
       </form>
-      <form method="get" style={{ display: 'inline-block' }} preventdefault:submit onSubmit$={(e) => goToSlide(e, (index.value + 1) % slides.length)}>
-        <input type="hidden" name="slide" value={(index.value + 1) % slides.length} />
+
+      {/* Next Slide Button */}
+      <form
+        method="get"
+        preventdefault:submit
+        onSubmit$={e => goToSlide(e, index.value + 1)}
+        style={{ display: 'inline-block', marginLeft: "5px" }}
+      >
+        <input type="hidden" name="slide" value={(index.value + 1) % totalSlides} />
         <button
           type="submit"
-          class="absolute top-1/2 right-2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow"
+          aria-label="Next Slide"
         >
           ▶
         </button>
       </form>
-      <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-        {slides.map((_, i) => (
-          <div
-            key={i}
-            class={{
-              'w-2 h-2 rounded-full': true,
-              'bg-white/80': index.value !== i,
-              'bg-white': index.value === i,
-            }}
-          />
-        ))}
+
+      {/* Slide Indicators */}
+      <div style={{ display: 'inline-block', marginLeft: "20px"}}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', }}>
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              class={index.value === i ? 'dot active' : 'dot'}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
