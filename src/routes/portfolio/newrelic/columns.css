@@ -1,0 +1,49 @@
+.grid {
+  display: grid;
+  gap: 1.75rem; /* space between cards (optional if you use margins instead) */
+}
+
+.grid > div {
+  display: flex;                    /* enables flexbox layout */
+  align-items: center;             /* vertically center */
+  justify-content: center;         /* horizontally center (optional) */
+  text-align: center;
+  padding: 0.25rem;
+
+}
+.grid > div.box-it {
+  position: relative;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.25rem;
+  background: #aaf;
+}
+
+.grid > div:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -1.5rem; /* push arrow outside */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: #888;
+}
+.grid-2-container {
+  grid-template-columns: repeat(3, auto);
+}
+.grid-2-container > div.box-it:nth-child(3n)::after {
+  content: "";
+}
+.grid-3-container {
+  grid-template-columns: repeat(3, auto);
+}
+.grid-3-container > div.box-it:nth-child(3n)::after {
+  content: "";
+}
+.grid-6-container {
+  grid-template-columns: repeat(6, auto);
+}
+.grid-6-container > div.box-it:nth-child(6n)::after {
+  content: "";
+}
+

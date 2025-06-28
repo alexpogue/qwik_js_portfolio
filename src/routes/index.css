@@ -1,0 +1,25 @@
+#container {
+    display:table; /* width is based on content size */
+    margin:100px auto;
+    padding:0 15px;
+}
+#container h1 {
+    font-size:1.4em;
+    text-align:center;
+}
+/* this trick prevents page jumps when image loads
+see http://aspiringwebdev.com/stop-your-web-pages-from-jumping-around-while-images-load/ */
+.image-container img {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+}
+.image-container {
+    position:relative;
+    padding-bottom: 66%;
+    height:0;
+    overflow:hidden;
+    margin:0 auto;
+    width:150px;
+}
