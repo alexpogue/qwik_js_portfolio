@@ -2,14 +2,12 @@
   display: grid;
   gap: 1.75rem; /* space between cards (optional if you use margins instead) */
 }
-
 .grid > div {
   display: flex;                    /* enables flexbox layout */
   align-items: center;             /* vertically center */
   justify-content: center;         /* horizontally center (optional) */
   text-align: center;
   padding: 0.25rem;
-
 }
 .grid > div.box-it {
   position: relative;
@@ -18,8 +16,7 @@
   padding: 0.75rem 0.25rem;
   background: #aaf;
 }
-
-.grid > div:not(:last-child)::after {
+.grid > div.box-it::after {
   content: "→";
   position: absolute;
   right: -1.5rem; /* push arrow outside */
@@ -31,7 +28,7 @@
 .grid-2-container {
   grid-template-columns: repeat(3, auto);
 }
-.grid-2-container > div.box-it:nth-child(3n)::after {
+.grid-2-container > div.box-it:nth-child(2n)::after {
   content: "";
 }
 .grid-3-container {

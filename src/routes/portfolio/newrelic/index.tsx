@@ -284,7 +284,7 @@ Rationale: IBM consolidating to a single monitoring system for all cloud service
             Slide15,
           ]}
           initialSlide={slideIndex.value}
-          width="100%"
+          width="650px"
           height="300px"
         />
       </div>
