@@ -1,19 +1,21 @@
 import { component$, useStylesScoped$, $ } from "@builder.io/qwik";
-//import { Link } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import { routeLoader$ } from "@builder.io/qwik-city";
 import styles from "../../index.css?inline";
 import columnStyles from "./columns.css?inline";
 
 import { ImageSlider } from '../../../components/image-slider/image-slider';
 
-import Image1 from '~/assets/slide1.jpg';
-import Image2 from '~/assets/slide2.jpg';
-/*
-import Slide3 from '~/assets/slide3.jpg';
-*/
+export const useSlideIndex = routeLoader$(({ url }) => {
+  const slide = parseInt(url.searchParams.get('slide') || '0', 10);
+  return isNaN(slide) ? 0 : Math.max(0, slide);
+});
 
 export default component$(() => {
   useStylesScoped$(styles);
+
+  const slideIndex = useSlideIndex();
+
   const Slide1 = component$(() =>
     <>
       <div>Monitoring Infrastructure Transition from Graphite/Seyren</div>
@@ -281,6 +283,7 @@ Rationale: IBM consolidating to a single monitoring system for all cloud service
             $(() => <Slide14 />),
             $(() => <Slide15 />),
           ]}
+          initialSlide={slideIndex.value}
           width="100%"
           height="300px"
         />
