@@ -1,8 +1,8 @@
-import { component$, useSignal, useStylesScoped$, $ } from '@builder.io/qwik';
+import { component$, useSignal, useStylesScoped$, $, Component } from '@builder.io/qwik';
 import sliderDotStyle from "./slider_dots.css?inline";
 
 interface ImageSliderProps {
-  slides: (() => JSX.Element)[];
+  slides: Component<any>[];
   initialSlide?: number;
   width?: string;
   height?: string;
@@ -19,6 +19,7 @@ export const ImageSlider = component$(({ slides, initialSlide = 0, width = '100%
     index.value = (newIndex + totalSlides) % totalSlides; // safe wrap around
   });
 
+  const SlideComponent = slides[index.value]
   return (
     <div
       style={{ width, height }}
@@ -26,7 +27,7 @@ export const ImageSlider = component$(({ slides, initialSlide = 0, width = '100%
       <div
         style={{border: '1px solid #AAA', padding:'10px', width:'95%', height:'350px'}}
       >
-        {slides[index.value]()}
+        <SlideComponent />
       </div>
 
       {/* Previous Slide Button */}
