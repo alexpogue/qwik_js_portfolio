@@ -8,7 +8,7 @@ export default component$(() => {
   return (
     <>
       <div id="container">
-        <Link href="/">Home</Link><a href="resume.pdf" class="right">PDF</a>
+        <Link href="../">Home</Link><a href="resume.pdf" class="right">PDF</a>
         <h1>Alex Pogue</h1>
         <h2>Software Engineer</h2>
         <h3>Technical Skills</h3>

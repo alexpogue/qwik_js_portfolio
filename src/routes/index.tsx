@@ -16,7 +16,7 @@ export default component$(() => {
         <ul>
           <li>Software Engineer at Mayo Clinic.</li>
           <li>
-            <Link href="/resume/">Resume</Link>, <Link href="/portfolio/">Portfolio</Link>, <a href="https://github.com/alexpogue">GitHub</a>
+            <Link href="resume/">Resume</Link>, <Link href="portfolio/">Portfolio</Link>, <a href="https://github.com/alexpogue">GitHub</a>
           </li>
         </ul>
       </div>
