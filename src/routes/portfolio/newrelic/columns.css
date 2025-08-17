@@ -43,4 +43,22 @@
 .grid-6-container > div.box-it:nth-child(6n)::after {
   content: "";
 }
-
+.grid-2-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+}
+.grid-2-images > div {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+.grid-2-images > div > img {
+  width: 305px;
+  height: auto;
+}
+.grid-2-images > div.constrain-height > img {
+  height: 150px;
+  width: auto;
+}
